@@ -1,0 +1,138 @@
+﻿@model ML.Result
+@{
+    ViewData["Title"] = "GetCargaMasiva";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <center><h1>CARGA DE USUARIOS</h1></center>
+            <hr />
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-md-12">
+            <center>
+                <p><b>Seleccione el tipo de archivo que desea cargar y despues selecione dicho archivo</b></p>
+                <p><b>Puede ser archivo de Excel o Bloc de notas</b></p>
+            </center>
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-md-6">
+            <a><input type="submit" value="Excel" class="btn btn-success col-md-12" id="xlsx" /></a>
+        </div>
+        <div class="col-md-6">
+            <a><input type="submit" value="TXT" class="btn btn-primary col-md-12" id="txt" /></a>
+        </div>
+    </div>
+
+    <br />
+    <div class="row">
+        <div class="col-md-6">
+            @using (Html.BeginForm("GetCargaMasiva", "UsuarioCargaMasiva", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                <div class="row g-3" id="fuImage" style="display:none;">
+                    <div class="row g-3">
+                        <div class="input-group">
+                            <span class="input-group-text" id="basic-addon1"><i class="bi bi-filetype-xls" style="color: #235323;"></i></span>
+                            <input type="file" class="form-control" name="fileExcel" />
+                        </div>
+                    </div>
+                    <div class="row g-3">
+                        <div class="col-md-12">
+                            <a><input type="submit" value="Pocesar archivo" class="btn btn-success col-md-6" /></a>
+                            <span class="alert-success col-md-6">@ViewBag.Message</span>
+                            <br />
+                        </div>
+                    </div>
+                    <div class="row g-3">
+                        <div class="col-md-12">
+                            <a><input type="submit" value="Insertar" class="btn btn-success col-md-6" /></a>
+                            <br />
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+        @*//Contenedor del TXT*@
+        <br />
+        <div class="col-md-6">
+            @using (Html.BeginForm("PostCargaMasiva", "UsuarioCargaMasiva", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                <div class="row g-3" id="fuTxt" style="display:none">
+                    <div class="row g-3">
+                        <div class="input-group">
+                            <span class="input-group-text" id="basic-addon1"><i class="bi bi-filetype-txt"></i></span>
+                            <input type="file" class="form-control" name="file" />
+                        </div>
+                    </div>
+                    <div class="row g-3">
+                        <div class="col-md-12">
+                            <a><input type="submit" value="Pocesar archivo" class="btn btn-info col-md-6" /></a>
+                            <br />
+                        </div>
+                    </div>
+                    <div class="row g-3">
+                        <div class="col-md-12">
+                            <a><input type="submit" value="Insertar" class="btn btn-info col-md-6" /></a>
+                            <br />
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-md-12">
+            @if (Model.Objects != null)
+            {
+                @if (Model.Objects.Count > 0)
+                {
+                    <table class="table table-bordered table-responsive table-dark">
+                        <thead>
+                            <tr class="text-center">
+                                <td>Numero del registro</td>
+                                <td>Error(s)</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (ML.ErrorExcel error in Model.Objects)
+                            {
+                                <tr class="text-center">
+                                    <td>@error.IdRegistro</td>
+                                    <td>@error.Mensaje</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                }
+            }
+            else
+            {
+                <div class="alert alert-success">
+                    <p>@ViewBag.Message </p>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+@section Scripts {
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="/resources/demos/style.css">
+    <script type="text/javascript">
+        $('#xlsx').click(function() {
+            $('#fuImage').toggle('slow', function() {
+            });
+        });
+
+        $('#txt').click(function() {
+            $('#fuTxt').toggle('slow', function() {
+            });
+        });
+    </script>
+}

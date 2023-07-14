@@ -1,0 +1,163 @@
+﻿@model ML.Empleado
+@{
+    ViewData["Title"] = "Form";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="container">
+    <div class="row">
+        <center><h1>EMPLEADOS</h1></center>
+        <hr />
+    </div>
+</div>
+<div class="container">
+    <center><h5>Rellene todos los campos</h5></center>
+    <br />
+</div>
+<br />
+<div class="container-fluid">
+    @using (Html.BeginForm("Form", "Empleado", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <br />
+        <div class="row">
+            <div class="col-md-12">
+                <center><h4>Datos personales</h4></center>
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-md-3">
+                @Html.LabelFor(model => model.NumeroEmpleado, new { @class = "control-label"})
+                <div class="input-group">
+                    <label class="input-group-text" for="inputGroupSelect01" id="lblNumeroEmpleado"><i class="bi bi-person-vcard-fill"></i></label>
+                    @Html.TextBoxFor(model => model.NumeroEmpleado, new { @class = "form-control", @id = "txtNumeroEmpleado" })
+                    @Html.ValidationMessageFor(model => model.NumeroEmpleado)
+                </div>
+            </div>
+            <div class="col-md-3">
+                @Html.LabelFor(model => model.RFC, new{ @class = "control-label"})
+                <div class="input-group">
+                    <label class="input-group-text" for="inputGroupSelect01" id="lblRFC"><i class="bi bi-credit-card-2-front-fill"></i></label>
+                    @Html.TextBoxFor(model => model.RFC, new{ @class = "form-control", @id = "txtRfc"})
+                    @Html.ValidationMessageFor(model => model.RFC)
+                </div>
+            </div>
+            <div class="col-md-3">
+                @Html.LabelFor(model => model.Nombre, new{ @class = "control-label" })
+                <div class="input-group">
+                    <label class="input-group-text" for="inputGroupSelect01" id="lblNombre"><i class="bi bi-person-badge-fill"></i></label>
+                    @Html.TextBoxFor(model => model.Nombre, new{ @class = "form-control", @id = "txtNombre" })
+                    @Html.ValidationMessageFor(model => model.Nombre)
+                </div>
+            </div>
+            <div class="col-md-3">
+                @Html.LabelFor(model => model.ApellidoPaterno, new{ @class = "control-label" })
+                <div class="input-group">
+                    <label class="input-group-text" for="inputGroupSelect01" id="lblAPaterno"><i class="bi bi-person-badge-fill"></i></label>
+                    @Html.TextBoxFor(model => model.ApellidoPaterno, new{ @class = "form-control", @id = "txtAPaterno" })
+                    @Html.ValidationMessageFor(model => model.ApellidoPaterno)
+                </div>
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-md-4">
+                @Html.LabelFor(model => model.ApellidoMaterno, new{ @class = "control-label" })
+                <div class="input-group">
+                    <label class="input-group-text" for="inputGroupSelect01" id="lblAMaterno"><i class="bi bi-person-badge-fill"></i></label>
+                    @Html.TextBoxFor(model => model.ApellidoMaterno, new{ @class = "form-control", @id = "txtAMaterno" })
+                    @Html.ValidationMessageFor(model => model.ApellidoMaterno)
+                </div>
+            </div>
+            <div class="col-md-4">
+                @Html.LabelFor(model => model.FechaNacimiento, new{ @class = "control-label" })
+                <div class="input-group">
+                    <label class="input-group-text" for="inputGroupSelect01" id="lblFNacimiento"><i class="bi bi-calendar-check-fill"></i></label>
+                    @Html.TextBoxFor(model => model.FechaNacimiento, new{ @class = "form-control", @id = "txtFNacimiento" })
+                    @Html.ValidationMessageFor(model => model.FechaNacimiento)
+                </div>
+            </div>
+            <div class="col-md-4">
+                @Html.LabelFor(model => model.NSS, new{ @class = "control-label" })
+                <div class="input-group">
+                    <label class="input-group-text" for="inputGroupSelect01" id="lblNSS"><i class="bi bi-file-medical-fill"></i></label>
+                    @Html.TextBoxFor(model => model.NSS, new{ @class = "form-control", @id = "txtNSS" })
+                    @Html.ValidationMessageFor(model => model.NSS)
+                </div>
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-lg-6">
+                @Html.LabelFor(model => model.Foto, new{ @class = "control-label" })
+                <div class="input-group">
+                    <label class="input-group-text" for="inputGroupSelect01" id="lblFoto"><i class="bi bi-image-fill"></i></label>
+                    <input type="file" id="fileImage" name="fileImage" class="form-control">
+                </div>
+                <span id="lblErrorFoto" />
+            </div>
+            <div class="col-lg-6">
+                <img src="~/images/NotLoadedImage.png" width="100" height="100" id="imagenView">
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-md-12">
+                <center><h4>Información de contacto</h4></center>
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-md-3">
+                @Html.LabelFor(model => model.Telefono, new{ @class = "lblTelefono" })
+                <div class="input-group">
+                    <label class="input-group-text" for="inputGroupSelect01" id="lblTelefono"><i class="bi bi-phone-fill"></i></label>
+                    @Html.TextBoxFor(model => model.Telefono, new{ @class = "form-control", @id = "yxyTelefono" })
+                    @Html.ValidationMessageFor(model => model.Telefono)
+                </div>
+            </div>
+            <div class="col-md-3">
+                @Html.LabelFor(model => model.Email, new{ @class = "lblEmail" })
+                <div class="input-group">
+                    <label class="input-group-text" for="inputGroupSelect01" id="lblEmail"><i class="bi bi-envelope-at-fill"></i></label>
+                    @Html.TextBoxFor(model => model.Email, new{ @class = "form-control", @id = "txtEmail" })
+                    @Html.ValidationMessageFor(model => model.Email)
+                </div>
+            </div>
+            <div class="col-md-3">
+                @Html.LabelFor(model => model.Email,"Confirme su Email: ", new{ @class = "lblEmail" })
+                <div class="input-group">
+                    <label class="input-group-text" for="inputGroupSelect01" id="lblEmailValidacion"><i class="bi bi-envelope-exclamation-fill"></i></label>
+                    @Html.TextBoxFor(model => model.Email, new{ @class = "form-control", @id = "txtEmailValidacion" })
+                    @Html.ValidationMessageFor(model => model.Email)
+                </div>
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-md-3">
+                <center><h4>Información de la empresa</h4></center>
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-md-3">
+                @Html.LabelFor(model => model.Empresa.IdEmpresa, new{ @class = "control label" })
+                <div class="input-group">
+                    <label class="input-group-text" for="inputGroupSelect01" id="lblEmpresa"><i class="bi bi-building-fill"></i></label>
+                    @Html.DropDownListFor(model => model.Empresa.Empresas, new SelectList(Model.Empresa.Empresas, "IdEmpresa", "Nombre"), "Selecciona una oppcion", new{ @class = "form-control", @id = "ddlEmpresa"})
+                    @Html.ValidationMessageFor(model => model.Empresa.Empresas)
+                </div>
+            </div>
+            <div class="col-md-3">
+                @Html.LabelFor(model => model.FechaIngreso, new{ @class = "control-label" })
+                <div class="input-group">
+                    <label class="input-group-text" for="inputGroupSelect01" id="lblFIngreso"><i class="bi bi-calendar-check-fill"></i></label>
+                    @Html.TextBoxFor(model => model.FechaIngreso, new{ @class = "form-control", @id = "txtFIngreso" })
+                    @Html.ValidationMessageFor(model => model.FechaIngreso)
+                </div>
+            </div>
+        </div>
+        <></>
+    }
+</div>
+

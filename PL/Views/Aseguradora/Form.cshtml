@@ -1,0 +1,60 @@
+﻿@model ML.Aseguradora
+@{
+    ViewData["Title"] = "Form";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="container">
+    <div class="row">
+        <center><h1>ASEGURADORA</h1></center>
+        <hr />
+    </div>
+    <div class="row">
+        <center><h5>Rellene todos los datos de la aseguradora</h5></center>
+    </div>
+    @using (Html.BeginForm("Form", "Aseguradora", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <div class="row">
+            <center>
+                <div class="col-md-12">
+                    @Html.LabelFor(model => model.IdAseguradora, new { @class = "control-label visually-hidden"} )
+                    @Html.TextBoxFor(model => model.IdAseguradora, new { @class = "form-control visually-hidden", @readonly = "true"} )
+                    @Html.ValidationMessageFor(model => model.IdAseguradora)
+                </div>
+            </center>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-md-12">
+                <center><h4>Datos de la aseguradora</h4></center>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                @Html.LabelFor(model => model.Nombre, new { @class = "control-label" })
+                <div class="input-group">
+                    <label class="input-group-text" for="inputGroupSelect01" id="lblNombre"><i class="bi bi-buildings-fill"></i></label>
+                    @Html.TextBoxFor(model => model.Nombre, new { @class = "form-control", @id = "txtNombre" })
+                    @Html.ValidationMessageFor(model => model.Nombre)
+                </div>
+            </div>
+            <div class="col-md-6">
+                @Html.LabelFor(model => model.Usuario.IdUsuario, new { @class = "control-label" })
+                <div class="input-group">
+                    <label class="input-group-text" for="inputGroupSelect01"><i class="bi bi-person-square"></i></label>
+                    @Html.DropDownListFor(model => model.Usuario.IdUsuario, new SelectList(Model.Usuario.Usuarios, "IdUsuario", "Nombre"), "Selecciona una opción", new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Usuario.IdUsuario)
+                </div>
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-md-6">
+                <button type="submit" class="btn btn-success bg-info bi-database-fill-add col-md-12" id="btnSuccess"> @ViewBag.Accion</button>
+            </div>
+            <div class="col-md-6">
+                @Html.ActionLink(" Regresar", "GetAll", "Usuario", new {}, new { @class = "btn btn-danger bi bi-skip-backward-btn-fill col-md-12" })
+            </div>
+        </div>
+    }
+</div>
+

@@ -1,0 +1,120 @@
+﻿@model ML.Aseguradora
+@{
+    ViewData["Title"] = "GetAll";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <center><h1>ASEGURADORA</h1></center>
+            <hr />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <p><b>Instrucciones sobre el uso de la página</b></p>
+            <p><b>Boton verde:    </b>Nos dirige al formulario para añadir una nueva aseguradora</p>
+            <p><b>Boton Amarillo: </b>Nos dirige al formulario para modificar un registro</p>
+            <p><b>Boton rojo:     </b>Nos permite eliminar un registro</p>
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        @using (Html.BeginForm("GetAll", "Aseguradora", FormMethod.Post, new { enctype = "multipart/form-data"} ))
+        {
+            <div class="col-md-5">
+                @Html.TextBoxFor(model => model.Nombre, new{ @class = "form-control", @placeholder = "Nombre", @id = "txtNombre"})
+            </div>
+            <div class="col-md-5">
+                <button type="submit" class="btn btn-secondary bg-info bi-search"> | Buscar</button>
+            </div>
+        }
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-md-12">
+            <center> @Html.ActionLink(" Agregar Aseguradora", "Form", "Aseguradora", new{}, new { @class = "btn btn-success bi bi-plus-square-fill"}) </center>
+            <hr />
+        </div>
+    </div>
+    <div class="row">
+        @if (Model.Aseguradoras != null)
+        {
+            <div class="table table-responsive">
+                <table class="table table-hover table-dark">
+                    <thead>
+                        <tr>
+                            <th scope="col">EDITAR</th>
+                            <th scope="col" class="visually-hidden">ID ASEGURADORA</th>
+                            <th scope="col">NOMBRE</th>
+                            <th scope="col">FECHA CREACIÓN</th>
+                            <th scope="col">FECHA MODIFICACIÓN</th>
+                            <th scope="col" class="visually-hidden">ID USUARIO</th>
+                            <th scope="col">NOMBRE USUARIO</th>
+                            <th scope="col">APELLIDO PATERNO</th>
+                            <th scope="col">APELLIDO MATERNO</th>
+                            <th scope="col">STATUS</th>
+                            <th scope="col">ELIMINAR</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (ML.Aseguradora aseguradora in Model.Aseguradoras)
+                        {
+                            <tr>
+                                <td><a href="@Url.Action("Form", "Aseguradora", new { IdAseguradora = aseguradora.IdAseguradora })" class="btn btn-warning"><i class="bi bi-pencil-square"></i></a></td>
+                                <td class="visually-hidden">@aseguradora.IdAseguradora</td>
+                                <td>@aseguradora.Nombre</td>
+                                <td>@aseguradora.FechaCreacion</td>
+                                <td>@aseguradora.FechaModificacion</td>
+                                <td class="visually-hidden">@aseguradora.Usuario.IdUsuario</td>
+                                <td>@aseguradora.Usuario.Nombre</td>
+                                <td>@aseguradora.Usuario.ApellidoPaterno</td>
+                                <td>@aseguradora.Usuario.ApellidoMaterno</td>
+                                <td>
+                                    <div class="form-check form-switch">
+                                        @if (@aseguradora.Status == true)
+                                        {
+                                            <input class="form-check-input" type="checkbox" id="cbxStatus" onclick="cambiarStatus(this.checked, @aseguradora.IdAseguradora)" checked />
+                                        }
+                                        else
+                                        {
+                                            <input class="form-check-input" type="checkbox" id="cbxStatus" onclick="cambiarStatus(this.checked, @aseguradora.IdAseguradora)" />
+                                        }
+                                    </div>
+                                </td>
+                                <td><a href="@Url.Action("Delete", "Aseguradora", new { IdAseguradora = aseguradora.IdAseguradora})" class="btn btn-danger"><i class="bi bi-trash3-fill"></i></a></td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+        else
+        {
+            <div class="alert alert-danger" role="alert">
+                @ViewBag.Message
+            </div>
+        }
+    </div>
+</div>
+
+@section Scripts {
+    <script type="text/javascript">
+        function cambiarStatus(checked, idDeAseguradora) {
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("CambiarStatus")',
+                dataType: 'json',
+                data: {
+                    status: checked,
+                    idAseguradora: idDeAseguradora
+                },
+                success: {},
+                error: function(ex) {
+                    alert(ex)
+                }
+
+            });
+        }
+    </script>
+}

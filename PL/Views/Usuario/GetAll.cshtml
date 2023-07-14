@@ -1,0 +1,174 @@
+﻿@model ML.Usuario
+@{
+    ViewData["Title"] = "GetAll";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <center><h1>USUARIOS</h1></center>
+            <hr />
+        </div>
+    </div>
+    <div class="row">
+        <p><b>Los siguientes controles pueden utilizarse con los registros de la tabla:</b></p>
+        <p><b>Boton verde: </b>Permite añadir nuevos registros</p>
+        <p><b>Boton amarillo: </b>Permite modificar los registros de la tabla</p>
+        <p><b>Boton rojo: </b>Permite eliminar los registros</p>
+    </div>
+    <div class="row">
+        <center>@Html.ActionLink(" Añadir usuario", "Form", "Usuario",new {} , new { @class="btn btn-success bi bi-plus-square-fill" })</center>
+        <br />
+    </div>
+    <br />
+    @using (Html.BeginForm("GetAll", "Usuario", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <div class="row">
+            <div class="col-md-4">
+                @Html.TextBoxFor(model => model.Nombre, new { @class = "form-control", placeholder = "Nombre" })
+            </div>
+            <div class="col-md-4">
+                @Html.TextBoxFor(model => model.ApellidoPaterno, new { @class = "form-control", placeholder = "Apellido paterno" })
+            </div>
+            <div class="col-md-4">
+                <button type="submit" class="btn btn-secondary bi bi-search"> | Buscar</button>
+            </div>
+        </div>
+    }
+</div>
+<div class="container container-fluid">
+    @if (Model.Usuarios != null)
+    {
+        <br />
+        <div class="table-responsive">
+            <table class="table table-dark table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">EDITAR</th>
+                        <th scope="col" class="visually-hidden">ID USUARIO</th>
+                        <th scope="col">USERNAME</th>
+                        <th scope="col">NOMBRE</th>
+                        <th scope="col">APELLIDO PATERNO</th>
+                        <th scope="col">APELLIDO MATERNO</th>
+                        <th scope="col">EMAIL</th>
+                        <th scope="col">PASSWORD</th>
+                        <th scope="col">SEXO</th>
+                        <th scope="col">TELEFONO</th>
+                        <th scope="col">CELULAR</th>
+                        <th scope="col">FECHA NACIMIENTO</th>
+                        <th scope="col">CURP</th>
+                        <th scope="col">IMAGEN</th>
+                        <th scope="col" class="visually-hidden">ID ROL</th>
+                        <th scope="col">ROL</th>
+                        <th scope="col" class="visually-hidden">ID DIRECCIÓN</th>
+                        <th scope="col">CALLE</th>
+                        <th scope="col">NUMERO INTERIOR</th>
+                        <th scope="col">NUMERO EXTERIOR</th>
+                        <th scope="col" class="visually-hidden">ID COLONIA</th>
+                        <th scope="col">COLONIA</th>
+                        <th scope="col">CODIGO POSTAL</th>
+                        <th scope="col" class="visually-hidden">ID MUNICIPIO</th>
+                        <th scope="col">MUNICIPIO</th>
+                        <th scope="col" class="visually-hidden">ID ESTADO</th>
+                        <th scope="col">ESTADO</th>
+                        <th scope="col" class="visually-hidden">ID PAIS</th>
+                        <th scope="col">PAIS</th>
+                        <th scope="col">STATUS</th>
+                        <th scope="col">ELIMINAR</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (ML.Usuario usuario in Model.Usuarios)
+                    {
+                        <tr>
+                            <td><a href="@Url.Action("Form", "Usuario", new { IdUsuario = usuario.IdUsuario})" class="btn btn-warning"><i class="bi bi-pencil-square"></i></a></td>
+                            <td class="visually-hidden">@usuario.IdUsuario</td>
+                            <td>@usuario.UserName</td>
+                            <td>@usuario.Nombre</td>
+                            <td>@usuario.ApellidoPaterno</td>
+                            <td>@usuario.ApellidoMaterno</td>
+                            <td>@usuario.Email</td>
+                            <td>@usuario.Password</td>
+                            <td>@usuario.Sexo</td>
+                            <td>@usuario.Telefono</td>
+                            <td>@usuario.Celular</td>
+                            <td>@usuario.FechaNacimiento</td>
+                            <td>@usuario.CURP</td>
+                            <td>
+                                @if (@usuario.Imagen == null)
+                                {
+                                    <img src="~/images/notLoadedImage.png" width="50" height="50" />
+                                }
+                                else
+                                {
+                                    <img src="data:image/png;base64,@usuario.Imagen" width="50" height="50" />
+                                }
+                            </td>
+                            <td class="visually-hidden">@usuario.Rol.IdRol</td>
+                            <td>@usuario.Rol.Nombre</td>
+                            <td class="visually-hidden">@usuario.Direccion.IdDireccion</td>
+                            <td>@usuario.Direccion.Calle</td>
+                            <td>@usuario.Direccion.NumeroInterior</td>
+                            <td>@usuario.Direccion.NumeroExterior</td>
+                            <td class="visually-hidden">@usuario.Direccion.Colonia.IdColonia</td>
+                            <td>@usuario.Direccion.Colonia.Nombre</td>
+                            <td>@usuario.Direccion.Colonia.CodigoPostal</td>
+                            <td class="visually-hidden">@usuario.Direccion.Colonia.Municipio.IdMunicipio</td>
+                            <td>@usuario.Direccion.Colonia.Municipio.Nombre</td>
+                            <td class="visually-hidden">@usuario.Direccion.Colonia.Municipio.Estado.IdEstado</td>
+                            <td>@usuario.Direccion.Colonia.Municipio.Estado.Nombre</td>
+                            <td class="visually-hidden">@usuario.Direccion.Colonia.Municipio.Estado.Pais.IdPais</td>
+                            <td>@usuario.Direccion.Colonia.Municipio.Estado.Pais.Nombre</td>
+                            <td>
+                                <div class="form-check form-switch">
+                                    @if (@usuario.Status == true)
+                                    {
+                                        <input class="form-check-input" type="checkbox" id="cbxStatus" onclick="cambiarStatus(this.checked, @usuario.IdUsuario)" checked />
+                                    }
+                                    else
+                                    {
+                                        <input class="form-check-input" type="checkbox" id="cbxStatus" onclick="cambiarStatus(this.checked, @usuario.IdUsuario)" />
+                                    }
+                                </div>
+                            </td>
+                            <td><a href="@Url.Action("Delete", "Usuario", new {IdUsuario = usuario.IdUsuario})" class="btn btn-danger"><i class="bi bi-trash3-fill"></i></a></td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-danger" role="alert">
+            @ViewBag.Message
+        </div>
+    }
+</div>
+
+@section Scripts{
+    <script type="text/javascript">
+        function cambiarStatus(checked, idDeUsuario) {
+            if ($("#cbxStatus").prop('checked')) {
+                var cbxstatus = 1;
+            }
+            else {
+                var cbxstatus = 0;
+            }
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("CambiarStatus")',
+                dataType: 'json',
+                data: {
+                    status: checked,
+                    idUsuario: idDeUsuario },
+                success: {},
+                error: function(ex) {
+                    alert(ex)
+                }
+
+            });
+        }
+    </script>
+}

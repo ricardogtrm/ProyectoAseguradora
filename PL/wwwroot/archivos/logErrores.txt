@@ -1,0 +1,11 @@
+No se inserto el usuario con el nombre: Jake Error: 
+Error: Violation of UNIQUE KEY constraint 'UQ__Usuario__A9D105347973267C'. Cannot insert duplicate key in object 'dbo.Usuario'. The duplicate key value is (gilyunin0@marriott.com).
+The statement has been terminated.
+No se inserto el usuario con el nombre: Ryan Error: 
+Error: Violation of UNIQUE KEY constraint 'UQ__Usuario__A9D105347973267C'. Cannot insert duplicate key in object 'dbo.Usuario'. The duplicate key value is (cbater3@jalbum.net).
+The statement has been terminated.
+No se inserto el usuario con el nombre: Leonardo Error: 
+Error: Violation of UNIQUE KEY constraint 'UQ__Usuario__A9D105347973267C'. Cannot insert duplicate key in object 'dbo.Usuario'. The duplicate key value is (leosaku@gmail.com).
+The INSERT statement conflicted with the FOREIGN KEY constraint "FK_IdColonia". The conflict occurred in database "RGutierrezProgramacionNCapas", table "dbo.Colonia", column 'IdColonia'.
+The statement has been terminated.
+The statement has been terminated.
