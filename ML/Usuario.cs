@@ -70,7 +70,6 @@ namespace ML
         public ML.Rol Rol { get; set; } //Propiedad de navegacion para acceder a las FK
 
         public ML.Direccion Direccion { get; set; }
-        public ML.Aseguradora Aseguradora { get; set; }
 
         public List<object> Usuarios { get; set; }
 
