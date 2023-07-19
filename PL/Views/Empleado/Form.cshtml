@@ -45,7 +45,7 @@
                 @Html.LabelFor(model => model.Nombre, new{ @class = "control-label" })
                 <div class="input-group">
                     <label class="input-group-text" for="inputGroupSelect01" id="lblNombre"><i class="bi bi-person-badge-fill"></i></label>
-                    @Html.TextBoxFor(model => model.Nombre, new{ @class = "form-control", @id = "txtNombre" })
+                    @Html.TextBoxFor(model => model.Nombre, new{ @class = "form-control", @id = "txtNombre", onkeyup="validarNombre()" })
                     @Html.ValidationMessageFor(model => model.Nombre)
                 </div>
             </div>
@@ -53,7 +53,7 @@
                 @Html.LabelFor(model => model.ApellidoPaterno, new{ @class = "control-label" })
                 <div class="input-group">
                     <label class="input-group-text" for="inputGroupSelect01" id="lblAPaterno"><i class="bi bi-person-badge-fill"></i></label>
-                    @Html.TextBoxFor(model => model.ApellidoPaterno, new{ @class = "form-control", @id = "txtAPaterno" })
+                    @Html.TextBoxFor(model => model.ApellidoPaterno, new{ @class = "form-control", @id = "txtAPaterno", onkeyup="validarAPaterno()" })
                     @Html.ValidationMessageFor(model => model.ApellidoPaterno)
                 </div>
             </div>
@@ -64,7 +64,7 @@
                 @Html.LabelFor(model => model.ApellidoMaterno, new{ @class = "control-label" })
                 <div class="input-group">
                     <label class="input-group-text" for="inputGroupSelect01" id="lblAMaterno"><i class="bi bi-person-badge-fill"></i></label>
-                    @Html.TextBoxFor(model => model.ApellidoMaterno, new{ @class = "form-control", @id = "txtAMaterno" })
+                    @Html.TextBoxFor(model => model.ApellidoMaterno, new{ @class = "form-control", @id = "txtAMaterno", onkeyup="validarAMaterno()" })
                     @Html.ValidationMessageFor(model => model.ApellidoMaterno)
                 </div>
             </div>
@@ -72,7 +72,7 @@
                 @Html.LabelFor(model => model.FechaNacimiento, new{ @class = "control-label" })
                 <div class="input-group">
                     <label class="input-group-text" for="inputGroupSelect01" id="lblFNacimiento"><i class="bi bi-calendar-check-fill"></i></label>
-                    @Html.TextBoxFor(model => model.FechaNacimiento, new{ @class = "form-control", @id = "txtFNacimiento" })
+                    @Html.TextBoxFor(model => model.FechaNacimiento, new{ @class = "form-control", id = "datepicker" })
                     @Html.ValidationMessageFor(model => model.FechaNacimiento)
                 </div>
             </div>
@@ -80,23 +80,33 @@
                 @Html.LabelFor(model => model.NSS, new{ @class = "control-label" })
                 <div class="input-group">
                     <label class="input-group-text" for="inputGroupSelect01" id="lblNSS"><i class="bi bi-file-medical-fill"></i></label>
-                    @Html.TextBoxFor(model => model.NSS, new{ @class = "form-control", @id = "txtNSS" })
+                    @Html.TextBoxFor(model => model.NSS, new{ @class = "form-control", @id = "txtNSS", onkeyup="validarNSS()" })
                     @Html.ValidationMessageFor(model => model.NSS)
                 </div>
             </div>
         </div>
         <br />
         <div class="row">
-            <div class="col-lg-6">
-                @Html.LabelFor(model => model.Foto, new{ @class = "control-label" })
+            <div class="col-md-6">
+                @Html.LabelFor(model => model.Foto, new { @class = "control-label" })
                 <div class="input-group">
-                    <label class="input-group-text" for="inputGroupSelect01" id="lblFoto"><i class="bi bi-image-fill"></i></label>
-                    <input type="file" id="fileImage" name="fileImage" class="form-control">
+                    <label class="input-group-text" for="inputGroupSelect01"><i class="bi bi-card-image"></i></label>
+                    <input type="file" id="fileImage" name="fileImage" class="form-control" />
+                    @Html.HiddenFor(model => model.Foto, new { @class = "form-control"})
+                    @*@Html.ValidationMessageFor(model => model.Imagen)*@
                 </div>
-                <span id="lblErrorFoto" />
+                <span id="lblErrorImagen" />
             </div>
-            <div class="col-lg-6">
-                <img src="~/images/NotLoadedImage.png" width="100" height="100" id="imagenView">
+            <div class="col-md-4">
+                @if (@Model.Foto == null)
+                {
+                    <img src="~/images/notLoadedImage.png" width="100px" height="100px" id="imagenView">
+                }
+                else
+                {
+                    <img src="data:image/png;base64,@Model.Foto" width="100px" height="100px" id="imagenView">
+                }
+
             </div>
         </div>
         <br />
@@ -111,7 +121,7 @@
                 @Html.LabelFor(model => model.Telefono, new{ @class = "lblTelefono" })
                 <div class="input-group">
                     <label class="input-group-text" for="inputGroupSelect01" id="lblTelefono"><i class="bi bi-phone-fill"></i></label>
-                    @Html.TextBoxFor(model => model.Telefono, new{ @class = "form-control", @id = "yxyTelefono" })
+                    @Html.TextBoxFor(model => model.Telefono, new{ @class = "form-control", @id = "txtTelefono", onkeyup="validarTelefono()" })
                     @Html.ValidationMessageFor(model => model.Telefono)
                 </div>
             </div>
@@ -130,11 +140,12 @@
                     @Html.TextBoxFor(model => model.Email, new{ @class = "form-control", @id = "txtEmailValidacion" })
                     @Html.ValidationMessageFor(model => model.Email)
                 </div>
+                <span id="lblErrorEmail"></span>
             </div>
         </div>
         <br />
         <div class="row">
-            <div class="col-md-3">
+            <div class="col-md-12">
                 <center><h4>Información de la empresa</h4></center>
             </div>
         </div>
@@ -144,20 +155,182 @@
                 @Html.LabelFor(model => model.Empresa.IdEmpresa, new{ @class = "control label" })
                 <div class="input-group">
                     <label class="input-group-text" for="inputGroupSelect01" id="lblEmpresa"><i class="bi bi-building-fill"></i></label>
-                    @Html.DropDownListFor(model => model.Empresa.Empresas, new SelectList(Model.Empresa.Empresas, "IdEmpresa", "Nombre"), "Selecciona una oppcion", new{ @class = "form-control", @id = "ddlEmpresa"})
-                    @Html.ValidationMessageFor(model => model.Empresa.Empresas)
+                    @Html.DropDownListFor(model => model.Empresa.IdEmpresa, new SelectList(Model.Empresa.Empresas, "IdEmpresa", "Nombre"), "Selecciona una oppcion", new{ @class = "form-control", @id = "ddlEmpresa"})
+                    @Html.ValidationMessageFor(model => model.Empresa.IdEmpresa)
                 </div>
             </div>
             <div class="col-md-3">
                 @Html.LabelFor(model => model.FechaIngreso, new{ @class = "control-label" })
                 <div class="input-group">
                     <label class="input-group-text" for="inputGroupSelect01" id="lblFIngreso"><i class="bi bi-calendar-check-fill"></i></label>
-                    @Html.TextBoxFor(model => model.FechaIngreso, new{ @class = "form-control", @id = "txtFIngreso" })
+                    @Html.TextBoxFor(model => model.FechaIngreso, new{ @class = "form-control", id = "datepicker1" })
                     @Html.ValidationMessageFor(model => model.FechaIngreso)
                 </div>
             </div>
         </div>
-        <></>
+        <br />
+        <div class="row">
+            <div class="col-md-6">
+                <button type="submit" class="btn btn-success col-md-12 bi bi-plus-square-fill"> @ViewBag.Accion</button>
+            </div>
+            <div class="col-md-6">
+                @Html.ActionLink(" Regresar", "GetAll", "Empleado", new{}, new { @class = "btn btn-danger col-md-12 bi bi-backspace-fill" })
+            </div>
+        </div>
     }
 </div>
+@section Scripts{
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>d
 
+    <script type="text/javascript">
+        //Calendario
+        $(function() {
+            $("#datepicker").datepicker();
+            $("#datepicker").datepicker("option", "dateFormat", "dd/mm/yy");
+            $("#datepicker1").datepicker();
+            $("#datepicker1").datepicker("option", "dateFormat", "dd/mm/yy");
+        });
+
+        //Previzualización de imagen cargada
+        function verImagen(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    $("#imagenView").attr('src', e.target.result);
+                }
+                reader.readAsDataURL(input.files[0])
+            }
+        }
+        $("#fileImage").change(function() {
+            var extension = ['jpeg', 'jpg', 'png', 'bmp'];
+            if ($.inArray($(this).val().split('.').pop().toLowerCase(), extension) == -1) {
+                $("#lblErrorImagen").text("El formato no pertenece a una imagen, puebe uno de los siguientes: " + extension.join(', ')).css("color", "Red");
+                $("#btnSuccess").prop("disabled", true)
+                $("#fileImage").val("");
+            }
+            else {
+                $("#lblErrorImagen").text("Formato correcto").css("color", "Green");
+                $("#btnSuccess").prop("disabled", false)
+                verImagen(this);
+            }
+        })
+
+        //Validar solo texto
+        $(function validarNombre() {
+            $("#txtNombre").keypress(function(e) {
+                var keyCode = e.keyCode || e.which;
+                var regex = /^[A-Za-z\s]+$/;
+
+                var isValid = regex.test(String.fromCharCode(keyCode));
+                if (!isValid) {
+                    $("#lblNombre").css("background-color", "red");
+                }
+                else {
+                    $("#lblNombre").css("background-color", "MediumSeaGreen");
+                }
+                return isValid;
+            });
+        });
+        $(function validarAPaterno() {
+            $("#txtAPaterno").keypress(function(e) {
+                var keyCode = e.keyCode || e.which;
+                var regex = /^[A-Za-z\s]+$/;
+
+                var isValid = regex.test(String.fromCharCode(keyCode));
+                if (!isValid) {
+                    $("#lblAPaterno").css("background-color", "red");
+                }
+                else {
+                    $("#lblAPaterno").css("background-color", "MediumSeaGreen");
+                }
+                return isValid;
+            });
+        });
+        $(function validarAMaterno() {
+            $("#txtAMaterno").keypress(function(e) {
+                var keyCode = e.keyCode || e.which;
+                var regex = /^[A-Za-z\s]+$/;
+
+                var isValid = regex.test(String.fromCharCode(keyCode));
+                if (!isValid) {
+                    $("#lblAMaterno").css("background-color", "red");
+                }
+                else {
+                    $("#lblAMaterno").css("background-color", "MediumSeaGreen");
+                }
+                return isValid;
+            });
+        });
+        //Función para válidar solo números
+        $(function validarNSS() {
+            $("#txtNSS").keypress(function(e) {
+                var keyCode = e.keyCode || e.which;
+                var regex = /^[0-9]+$/;
+
+                var isValid = regex.test(String.fromCharCode(keyCode));
+                if (!isValid) {
+                    $("#lblNSS").css("background-color", "red");
+                }
+                else {
+                    $("#lblNSS").css("background-color", "MediumSeaGreen")
+                }
+                return isValid;
+            });
+        });
+        $(function validarTelefono() {
+            $("#txtTelefono").keypress(function(e) {
+                var keyCode = e.keyCode || e.which;
+                var regex = /^[0-9]+$/;
+
+                var isValid = regex.test(String.fromCharCode(keyCode));
+                if (!isValid) {
+                    $("#lblTelefono").css("background-color", "red");
+                }
+                else {
+                    $("#lblTelefono").css("background-color", "MediumSeaGreen")
+                }
+                return isValid;
+            });
+        });
+        //Validación de Email
+        $(document).ready(function() {
+            $('#txtEmail').change(function() {
+                var email = $('#txtEmail').val();
+                var regex = /^([a-zA-Z0-9_\.\-\+])+\@@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+                if (!regex.test(email)) {
+                    $("#lblEmail").css("background-color", "red");
+                }
+                else {
+                    $("#lblEmail").css("background-color", "MediumSeaGreen");
+                }
+            });
+
+            $('#txtEmailVerificacion').change(function() {
+                var email = $('#txtEmailValidacion').val();
+                var email2 = $('#txtEmail').val();
+                var regex = /^([a-zA-Z0-9_\.\-\+])+\@@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+                if (!regex.test(email)) {
+                    $("#lblEmailValidacion").css("background-color", "red");
+                }
+                else {
+                    $("#lblEmailValidacion").css("background-color", "MediumSeaGreen");
+                }
+                if (!email.empty && !email2.empty) {
+                    if (email == email2) {
+                        $("#lblErrorEmail").text("Correcto").css("color", "green");
+                        $("#btnSuccess").prop("disabled", false)
+                    }
+                    else {
+                        $("#lblErrorEmail").text("Los Email no coinciden").css("color", "red");
+                        $("#btnSuccess").prop("disabled", true)
+                    }
+                }
+
+            });
+        });
+    </script>
+}

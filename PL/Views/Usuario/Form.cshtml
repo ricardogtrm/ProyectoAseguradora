@@ -46,16 +46,16 @@
             <div class="col-md-3">
                 @Html.LabelFor(model => model.ApellidoPaterno, new { @class = "control-label" })
                 <div class="input-group">
-                    <label class="input-group-text" for="inputGroupSelect01"><i class="bi bi-person-circle"></i></label>
-                    @Html.TextBoxFor(model => model.ApellidoPaterno, new { @class = "form-control", id = "txtApellidoP", onclick="apellidos()"})
+                    <label class="input-group-text" for="inputGroupSelect01" id="lblErrorAP"><i class="bi bi-person-circle"></i></label>
+                    @Html.TextBoxFor(model => model.ApellidoPaterno, new { @class = "form-control", id = "txtApellidoP", @onkeyup="soloTextoAP()"})
                     @Html.ValidationMessageFor(model => model.ApellidoPaterno)
                 </div>
             </div>
             <div class="col-md-3">
                 @Html.LabelFor(model => model.ApellidoMaterno, new { @class = "control-label" })
                 <div class="input-group">
-                    <label class="input-group-text" for="inputGroupSelect01"><i class="bi bi-person-circle"></i></label>
-                    @Html.TextBoxFor(model => model.ApellidoMaterno, new { @class = "form-control", id = "txtApellidoM" })
+                    <label class="input-group-text" for="inputGroupSelect01" id="lblErrorAM"><i class="bi bi-person-circle"></i></label>
+                    @Html.TextBoxFor(model => model.ApellidoMaterno, new { @class = "form-control", id = "txtApellidoM", @onkeyup="soloTextoAM()" })
                     @Html.ValidationMessageFor(model => model.ApellidoMaterno)
                 </div>
             </div>
@@ -160,8 +160,8 @@
             <div class="col-md-3">
                 @Html.LabelFor(model => model.Celular, new { @class = "control-label" })
                 <div class="input-group">
-                    <label class="input-group-text" for="inputGroupSelect01"><i class="bi bi-telephone-fill"></i></label>
-                    @Html.TextBoxFor(model => model.Celular, new { @class = "form-control" })
+                    <label class="input-group-text" for="inputGroupSelect01" id="lblCelular"><i class="bi bi-telephone-fill"></i></label>
+                    @Html.TextBoxFor(model => model.Celular, new { @class = "form-control", @id = "txtCelular", onkeyup="soloNumerosCelular()" })
                     @Html.ValidationMessageFor(model => model.Celular)
                 </div>
             </div>
@@ -307,18 +307,6 @@
     <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>d
 
     <script type="text/javascript">
-        function Texto() {
-            var texto = $("#txtNombre").val();
-            var regex = /^[a-zA-Z ]+$/;
-            if (regex.test(texto)) {
-                $("#txtNombre").css("background-color", "MediumSeaGreen");
-                $("#txtNombre").css("color", "white");
-            }
-            else {
-                $("#txtNombre").css("background-color", "Tomato");
-                $("#txtNombre").css("color", "white");
-            }
-        }
         //Calendario
         $(function() {
             $("#datepicker").datepicker();
@@ -329,7 +317,7 @@
         $(function soloTexto() {
             $("#txtNombre").keypress(function(e) {
                 var keyCode = e.keyCode || e.which;
-                var regex = /^[A-Za-z]+$/;
+                var regex = /^[A-Za-z\s]+$/;
 
                 var isValid = regex.test(String.fromCharCode(keyCode));
                 if (!isValid) {
@@ -341,6 +329,38 @@
                 return isValid;
             });
         });
+        $(function soloTextoAP() {
+            $("#txtApellidoP").keypress(function(e) {
+                var keyCode = e.keyCode || e.which;
+                var regex = /^[A-Za-z\s]+$/;
+
+                var isValid = regex.test(String.fromCharCode(keyCode));
+                if (!isValid) {
+                    $("#lblErrorAP").css("background-color", "red");
+                }
+                else {
+                    $("#lblErrorAP").css("background-color", "MediumSeaGreen");
+                }
+                return isValid;
+            });
+        });
+        $(function soloTextoAM() {
+            $("#txtApellidoM").keypress(function(e) {
+                var keyCode = e.keyCode || e.which;
+                var regex = /^[A-Za-z\s]+$/;
+
+                var isValid = regex.test(String.fromCharCode(keyCode));
+                if (!isValid) {
+                    $("#lblErrorAM").css("background-color", "red");
+                }
+                else {
+                    $("#lblErrorAM").css("background-color", "MediumSeaGreen");
+                }
+                return isValid;
+            });
+        });
+
+        
 
         //Función para válidar solo números
         $(function soloNumeros() {
@@ -354,6 +374,22 @@
                 }
                 else {
                     $("#lblTelefono").css("background-color", "MediumSeaGreen")
+                }
+                return isValid;
+            });
+        });
+
+        $(function soloNumerosCelular() {
+            $("#txtCelular").keypress(function(e) {
+                var keyCode = e.keyCode || e.which;
+                var regex = /^[0-9]+$/;
+
+                var isValid = regex.test(String.fromCharCode(keyCode));
+                if (!isValid) {
+                    $("#lblCelular").css("background-color", "red");
+                }
+                else {
+                    $("#lblCelular").css("background-color", "MediumSeaGreen")
                 }
                 return isValid;
             });
@@ -484,6 +520,7 @@
             });
         });
     </script>
+
     <script type="text/javascript">
         $(document).ready(function() { //Queda al pendiente de el documento y cuando este lista se activa la siguiente funcion
             $("#ddlEstado").change(function() {
@@ -508,6 +545,7 @@
             });
         });
     </script>
+
     <script type="text/javascript">
         $(document).ready(function() {
             $("#ddlMunicipio").change(function() {

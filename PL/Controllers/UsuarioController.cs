@@ -215,5 +215,7 @@ namespace PL.Controllers
             ML.Result result = BL.Usuario.CambiarStatus(idUsuario, status);
             return Json(result);
         }
+
+
     }
 }

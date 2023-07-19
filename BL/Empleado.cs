@@ -79,9 +79,9 @@ namespace BL
                             empleado.ApellidoMaterno = filaEmpleado.ApellidoMaterno;
                             empleado.Email = filaEmpleado.Email;
                             empleado.Telefono = filaEmpleado.Telefono;
-                            empleado.FechaNacimiento = filaEmpleado.FechaNacimiento.ToString();
+                            empleado.FechaNacimiento = filaEmpleado.FechaNacimiento.Value.ToString("dd/MM/yyyy");
                             empleado.NSS = filaEmpleado.Nss;
-                            empleado.FechaIngreso = filaEmpleado.FechaIngreso.ToString();
+                            empleado.FechaIngreso = filaEmpleado.FechaIngreso.Value.ToString("dd/MM/yyyy");
                             empleado.Foto = filaEmpleado.Foto;
                             empleado.Status = filaEmpleado.Status.Value;
                             //Información de Empresa
@@ -111,7 +111,7 @@ namespace BL
             {
                 using (DL.RGutierrezProgramacionNCapasContext context = new DL.RGutierrezProgramacionNCapasContext())
                 {
-                    var empleadoObj = context.Empleados.FromSqlRaw($"EmpleadoGetById {numeroEmpleado}").AsEnumerable().FirstOrDefault();
+                    var empleadoObj = context.Empleados.FromSqlRaw($"EmpleadoGetById '{numeroEmpleado}'").AsEnumerable().FirstOrDefault();
 
                     if (empleadoObj != null)
                     {
@@ -123,9 +123,9 @@ namespace BL
                         empleado.ApellidoMaterno = empleadoObj.ApellidoMaterno;
                         empleado.Email = empleadoObj.Email;
                         empleado.Telefono = empleadoObj.Telefono;
-                        empleado.FechaNacimiento = empleadoObj.FechaNacimiento.ToString();
+                        empleado.FechaNacimiento = empleadoObj.FechaNacimiento.Value.ToString("dd/MM/yyyy");
                         empleado.NSS = empleadoObj.Nss;
-                        empleado.FechaIngreso = empleadoObj.FechaIngreso.ToString();
+                        empleado.FechaIngreso = empleadoObj.FechaIngreso.Value.ToString("dd/MM/yyyy");
                         empleado.Foto = empleadoObj.Foto;
                         empleado.Status = empleadoObj.Status.Value;
                         //Información de Empresa
@@ -172,7 +172,18 @@ namespace BL
             ML.Result result = new ML.Result();
             try
             {
-
+                using (DL.RGutierrezProgramacionNCapasContext context = new DL.RGutierrezProgramacionNCapasContext())
+                {
+                    int query = context.Database.ExecuteSqlRaw($"EmpleadoUpdate '{empleado.NumeroEmpleado}','{empleado.RFC}'" +
+                        $",'{empleado.Nombre}','{empleado.ApellidoPaterno}','{empleado.ApellidoMaterno}','{empleado.Email}'" +
+                        $",'{empleado.Telefono}','{empleado.FechaNacimiento}','{empleado.NSS}','{empleado.FechaIngreso}'" +
+                        $",'{empleado.Foto}',{empleado.Empresa.IdEmpresa}");
+                    if (query > 0)
+                    {
+                        result.Correct = true;
+                        result.Message = "Registro modificado exitosamente";
+                    }
+                }
             }
             catch (Exception ex)
             {
