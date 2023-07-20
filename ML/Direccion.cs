@@ -10,7 +10,7 @@ namespace ML
     public class Direccion
     {
         [Display(Name = "Dirección: ")]
-        public int IdDireccion { get; set; }
+        public int? IdDireccion { get; set; }
 
         [Required(ErrorMessage = "Campo obligatorio")]
         [Display(Name = "Calle: ")]
@@ -23,8 +23,8 @@ namespace ML
         [Required(ErrorMessage = "Campo obligatorio")]
         [Display(Name = "Número exterior: ")]
         public string NumeroExterior { get; set; }
-        public ML.Colonia Colonia { get; set; }
-        public List<object> Direcciones { get; set; }
+        public ML.Colonia? Colonia { get; set; }
+        public List<object>? Direcciones { get; set; }
 
     }
 }

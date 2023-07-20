@@ -11,9 +11,9 @@ namespace ML
     {
         [Display(Name = "Rol de usuario: ")]
         public byte IdRol { get; set; }
-        public string Nombre { get; set; }
+        public string? Nombre { get; set; }
 
-        public List<object> Roles { get; set; }
+        public List<object>? Roles { get; set; }
 
     }
 }

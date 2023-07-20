@@ -64,14 +64,14 @@ namespace ML
         [Display(Name = "CURP: ")]
         public string CURP { get; set; }
 
-        public string Imagen { get; set; }
+        public string? Imagen { get; set; }
         public bool Status { get; set; }
 
-        public ML.Rol Rol { get; set; } //Propiedad de navegacion para acceder a las FK
+        public ML.Rol? Rol { get; set; } //Propiedad de navegacion para acceder a las FK
 
-        public ML.Direccion Direccion { get; set; }
+        public ML.Direccion? Direccion { get; set; }
 
-        public List<object> Usuarios { get; set; }
+        public List<object>? Usuarios { get; set; }
 
     }
 }

@@ -4,7 +4,7 @@
 
 namespace SL.Controllers
 {
-    [Route("api/Usuario")]
+    [Route("api/usuario")]
     [ApiController]
     public class UsuarioController : ControllerBase
     {
@@ -27,7 +27,7 @@ namespace SL.Controllers
 
         // GET api/<UsuarioController>/5
         [HttpGet]
-        [Route("GetById")]
+        [Route("getbyid/{idUsuario}")]
         public IActionResult GetById(int idUsuario)
         {
             ML.Result result = BL.Usuario.GetById(idUsuario);
@@ -43,7 +43,7 @@ namespace SL.Controllers
 
         // POST api/<UsuarioController>
         [HttpPost]
-        [Route("Add")]
+        [Route("add")]
         public IActionResult Add([FromBody] ML.Usuario usuario)
         {
             ML.Result result = BL.Usuario.Add(usuario);
@@ -58,8 +58,8 @@ namespace SL.Controllers
         }
 
         // PUT api/<UsuarioController>/5
-        [HttpPut]
-        [Route("Update")]
+        [HttpPost]
+        [Route("update")]
         public IActionResult Update([FromBody] ML.Usuario usuario)
         {
             ML.Result result = BL.Usuario.Update(usuario);
@@ -74,8 +74,8 @@ namespace SL.Controllers
         }
 
         // DELETE api/<UsuarioController>/5
-        [HttpDelete]
-        [Route("Delete")]
+        [HttpGet]
+        [Route("delete/{idUsuario}")]
         public IActionResult Delete(int idUsuario)
         {
             ML.Result result = BL.Usuario.Delete(idUsuario);
